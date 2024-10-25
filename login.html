@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SobatKerja - Login</title>
+    <link rel="stylesheet" href="daftar.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="assets/icon.svg" alt="Logo" class="logo-icon">
+            <img src="assets/logotext.svg" alt="Text Logo" class="logo-text">    
+        </div>
+        <h1>Login</h1>
+
+        <form action="login.php" method="post">
+            <label for="email">Email atau Nomor Kontak:</label>
+            <input type="text" id="email" name="email" placeholder="contoh@email.com atau 62812xxxxxx" required>
+        
+            <label for="password">Kata Sandi:</label>
+            <input type="password" id="password" name="password" placeholder="********" required>
+        
+            <label for="userType">Jenis Pengguna:</label>
+            <select id="userType" name="userType">
+                <option value="UMKM">UMKM</option>
+                <option value="JobSeeker">Pencari Kerja</option>
+            </select>
+        
+            <button type="submit">Login</button>
+        </form>        
+
+        <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
+    </div>
+</body>
+</html>

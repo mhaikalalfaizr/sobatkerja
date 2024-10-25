@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SobatKerja - Registration</title>
+    <link rel="stylesheet" href="daftar.css">
+    <script>
+        function showFields() {
+            const userType = document.getElementById("userType").value;
+            const umkmFields = document.getElementById("umkmFields");
+            const jobSeekerFields = document.getElementById("jobSeekerFields");
+
+            if (userType === "UMKM") {
+                umkmFields.style.display = "block";
+                jobSeekerFields.style.display = "none";
+            } else if (userType === "JobSeeker") {
+                umkmFields.style.display = "none";
+                jobSeekerFields.style.display = "block";
+            } else {
+                umkmFields.style.display = "none";
+                jobSeekerFields.style.display = "none";
+            }
+        }
+
+        function updateSkills() {
+            const jobField = document.getElementById("jobField").value;
+            const skills = document.getElementById("skills");
+
+            skills.innerHTML = "";
+
+            const skillOptions = {
+                "Manajemen": ["Manajemen Proyek", "Komunikasi", "Kepemimpinan"],
+                "Keuangan": ["Analisis Data", "Pembukuan", "Pemahaman Pajak"],
+                "Marketing": ["SEO", "Media Sosial", "Email Marketing"],
+                "Penjualan": ["Negosiasi", "Penjualan Produk", "Layanan Pelanggan"],
+                "IT": ["Pemrograman", "Analisis Data", "Keamanan Jaringan"],
+                "Desain": ["Desain Grafis", "UI/UX", "Fotografi"],
+                "Produksi": ["Pemecahan Masalah", "Pengawasan Proses", "Kualitas Produk"],
+                "Operasional": ["Manajemen Inventaris", "Optimasi Proses", "Logistik"],
+                "Logistik": ["Manajemen Rantai Pasokan", "Pengelolaan Gudang", "Distribusi"],
+                "Customer Service": ["Komunikasi", "Layanan Pelanggan", "Pemecahan Masalah"]
+            };
+
+            const selectedSkills = skillOptions[jobField] || [];
+
+            selectedSkills.forEach(skill => {
+                const option = document.createElement("option");
+                option.value = skill;
+                option.textContent = skill;
+                skills.appendChild(option);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="assets/icon.svg" alt="Logo" class="logo-icon">
+            <img src="assets/logotext.svg" alt="Text Logo" class="logo-text">  
+        </div>
+        
+        <h1>Pendaftaran</h1>
+        <form action="register.php" method="post">
+            <label for="userType">Jenis Pengguna:</label>
+            <select id="userType" name="userType" onchange="showFields()">
+                <option value="">--Pilih Jenis Pengguna--</option>
+                <option value="UMKM">UMKM</option>
+                <option value="JobSeeker">Pencari Kerja</option>
+            </select>
+            
+            <div id="umkmFields" style="display: none;">
+                <label for="businessName">Nama Usaha:</label>
+                <input type="text" id="businessName" name="businessName" placeholder="Nama usaha Anda" required>
+                
+                <label for="businessType">Jenis Usaha:</label>
+                <input type="text" id="businessType" name="businessType" placeholder="Jenis usaha Anda" required>
+        
+                <label for="address">Alamat:</label>
+                <input type="text" id="address" name="address" placeholder="Alamat usaha Anda" required>
+            </div>
+        
+            <div id="jobSeekerFields" style="display: none;">
+                <label for="fullName">Nama Lengkap:</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Nama lengkap Anda" required>
+        
+                <label for="jobField">Bidang Pekerjaan:</label>
+                <input type="text" id="jobField" name="jobField" placeholder="Bidang pekerjaan Anda" required>
+        
+                <label for="skills">Skill:</label>
+                <input type="text" id="skills" name="skills" placeholder="Skill Anda" required>
+            </div>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="contoh@email.com" required>
+        
+            <label for="password">Kata Sandi:</label>
+            <input type="password" id="password" name="password" placeholder="******" required>
+        
+            <label for="contact">Nomor Kontak:</label>
+            <input type="text" id="contact" name="contact" placeholder="62812xxxxxx" required>
+        
+            <button type="submit">Daftar</button>
+        </form>        
+
+        <p>Sudah punya akun? <a href="login.html">Login di sini</a></p>
+    </div>
+
+</body>
+</html>
