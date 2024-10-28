@@ -1,0 +1,76 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.dashboard-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+header {
+    width: 100%;
+    padding: 10px;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.logo-text {
+    margin-left: 8px;
+    height: 20px;
+}
+
+.add-vacancy-button .button {
+    background-color: #3EBBF7;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.view-vacancies table {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #3EBBF7;
+    color: white;
+}
+
+td {
+    background-color: #fff;
+}
+
+.view-vacancies {
+    width: 100%;
+    max-width: 900px;
+}

@@ -1,0 +1,94 @@
+/* Reset default margin and padding */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 900px;
+    text-align: left;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* Styling untuk tabel pelamar */
+.applicant-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.applicant-table th,
+.applicant-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.applicant-table th {
+    background-color: #3EBBF7;
+    color: white;
+    font-weight: bold;
+}
+
+.applicant-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.applicant-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Styling untuk tombol unduh CV */
+.download-button {
+    background-color: #3EBBF7;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    text-decoration: none;
+}
+
+.download-button:hover {
+    background-color: #36a1d6;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .applicant-table th,
+    .applicant-table td {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .download-button {
+        font-size: 0.8em;
+        padding: 6px 10px;
+    }
+}
