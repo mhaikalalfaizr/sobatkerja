@@ -12,9 +12,18 @@ $user = new User();
 $jobseeker_id = $_SESSION['user_id'];
 $profile = $user->getProfile($jobseeker_id, 'JobSeeker');
 
+if (!$profile) {
+    $profile = [
+        'full_name' => 'Data tidak tersedia',
+        'job_field' => 'Data tidak tersedia',
+        'skills' => 'Data tidak tersedia',
+        'email' => 'Data tidak tersedia',
+        'contact' => 'Data tidak tersedia'
+    ];
+}
+
 $db = Database::getInstance()->getConnection();
 
-// Ambil riwayat aplikasi lamaran
 $queryApplications = "
     SELECT 
         Vacancies.title AS vacancy_title,
@@ -35,17 +44,25 @@ $applicationsResult = $stmt->get_result();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Job Seeker</title>
     <link rel="stylesheet" href="dashboard_jobseeker.css">
 </head>
 <body>
     <div class="dashboard-container">
         <header>
-            <h2>Dashboard Job Seeker</h2>
+            <div class="header-logo">
+                <img src="assets/icon.svg" alt="Logo" class="logo-icon">
+                <img src="assets/logotext.svg" alt="Text Logo" class="logo-text">
+            </div>
+            <div class="header-buttons">
+                <a href="edit_profile_jobseeker.php" class="button">Edit Profil</a>
+                <a href="vacancy_search.php" class="button">Cari Lowongan</a>
+            </div>
         </header>
 
         <section class="profile-section">
-            <h3>Profil Job Seeker</h3>
+            <h3>Profil Anda</h3>
             <p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($profile['full_name']) ?></p>
             <p><strong>Bidang Pekerjaan:</strong> <?= htmlspecialchars($profile['job_field']) ?></p>
             <p><strong>Skill:</strong> <?= htmlspecialchars($profile['skills']) ?></p>

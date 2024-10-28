@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Cek apakah user sudah login dan memiliki tipe user 'JobSeeker'
 if (!isset($_SESSION['userType']) || $_SESSION['userType'] !== 'JobSeeker') {
     header('Location: login.php');
     exit();
@@ -10,10 +9,8 @@ if (!isset($_SESSION['userType']) || $_SESSION['userType'] !== 'JobSeeker') {
 require_once 'Vacancy.php';
 require_once 'User.php';
 
-// Ambil ID lowongan dari parameter URL
 $vacancy_id = $_GET['vacancy_id'] ?? null;
 
-// Ambil detail lowongan dari database
 $query = "SELECT * FROM Vacancies WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $vacancy_id);
@@ -26,18 +23,16 @@ if (!$vacancy) {
     exit();
 }
 
-// Proses pengiriman lamaran
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jobseeker_id = $_SESSION['user_id'];
     $upload_dir = 'jobseekercv/';
     $cv_file = $upload_dir . basename($_FILES['cv']['name']);
     $file_type = strtolower(pathinfo($cv_file, PATHINFO_EXTENSION));
 
-    // Validasi file
     if ($file_type != "pdf") {
         echo "<p class='error-message'>CV harus dalam format PDF.</p>";
     } elseif (move_uploaded_file($_FILES['cv']['tmp_name'], $cv_file)) {
-        // Simpan lamaran di database
+
         $query = "INSERT INTO Applications (jobseeker_id, vacancy_id, application_date, cv_path) VALUES (?, ?, NOW(), ?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("iis", $jobseeker_id, $vacancy_id, $cv_file);

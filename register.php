@@ -27,20 +27,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
     }
 
-    // Memeriksa kesalahan (duplikasi atau lainnya) saat registrasi
-    $errors = $user->register($userType, $email, $password, $contact, $additionalData);
-
-    // Menampilkan notifikasi berdasarkan hasil registrasi
-    if (empty($errors)) {
+    if (!preg_match('/^[0-9]+$/', $contact)) {
         echo "<script>document.addEventListener('DOMContentLoaded', function() {
-            showNotification('Pendaftaran berhasil!', 'success');
-            setTimeout(function() { window.location.href = 'login.php'; }, 2000);
+            showNotification('Nomor kontak hanya boleh berisi angka.', 'error');
         });</script>";
     } else {
-        foreach ($errors as $error) {
+        $errors = $user->register($userType, $email, $password, $contact, $additionalData);
+
+        if (empty($errors)) {
             echo "<script>document.addEventListener('DOMContentLoaded', function() {
-                showNotification('$error', 'error');
+                showNotification('Pendaftaran berhasil!', 'success');
+                setTimeout(function() { window.location.href = 'login.php'; }, 2000);
             });</script>";
+        } else {
+            foreach ($errors as $error) {
+                echo "<script>document.addEventListener('DOMContentLoaded', function() {
+                    showNotification('$error', 'error');
+                });</script>";
+            }
         }
     }
 }
@@ -54,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>SobatKerja - Pendaftaran</title>
     <link rel="stylesheet" href="daftar.css">
     <style>
-        /* CSS untuk pop-up notification */
         .notification {
             visibility: hidden;
             min-width: 250px;
@@ -90,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }, 100);
             setTimeout(function () {
                 notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 500); // Hapus elemen setelah menghilang
+                setTimeout(() => notification.remove(), 500);
             }, 3000);
         }
 
@@ -107,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             const jobField = document.getElementById("jobField").value;
             const skills = document.getElementById("skills");
 
-            skills.innerHTML = ""; // Kosongkan skill sebelumnya
+            skills.innerHTML = ""; 
 
             const skillOptions = {
                 "Manajemen": ["Manajemen Proyek", "Komunikasi", "Kepemimpinan"],
@@ -130,6 +133,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 option.textContent = skill;
                 skills.appendChild(option);
             });
+        }
+
+        function validateContactInput(event) {
+            const contactInput = event.target;
+            const contactValue = contactInput.value;
+
+            if (!/^\d*$/.test(contactValue)) {
+                contactInput.value = contactValue.replace(/\D/g, '');
+                showNotification('Nomor kontak hanya boleh berisi angka.', 'error');
+            }
         }
     </script>
 </head>
@@ -205,12 +218,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" id="password" name="password" placeholder="******" required>
 
             <label for="contact">Nomor Kontak:</label>
-            <input type="text" id="contact" name="contact" placeholder="62812xxxxxx" required>
+            <input type="text" id="contact" name="contact" placeholder="62812xxxxxx" required oninput="validateContactInput(event)">
 
             <button type="submit">Daftar</button>
         </form>
 
-        <p>Sudah punya akun? <a href="login.php">Login di sini</a></p>
+        <p>Sudah memiliki akun? <a href="login.php">Login di sini</a></p>
     </div>
 </body>
 </html>

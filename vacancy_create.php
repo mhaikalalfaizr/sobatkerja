@@ -15,6 +15,9 @@ $umkm_id = $_SESSION['user_id'];
 $profile = $user->getProfile($umkm_id, 'UMKM');
 $category = $profile['business_type'];
 
+$successMessage = '';
+$errorMessage = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -23,9 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $location = $_POST['location'];
 
     if ($vacancy->createVacancy($umkm_id, $title, $description, $requirements, $job_type, $location, $category)) {
-        echo "<p class='success-message'>Lowongan berhasil ditambahkan!</p>";
+        $successMessage = 'Lowongan berhasil ditambahkan! Mengalihkan kembali ke dashboard...';
+        echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    showNotification('$successMessage', 'success');
+                    setTimeout(function() { window.location.href = 'dashboard_umkm.php'; }, 2000);
+                });
+              </script>";
     } else {
-        echo "<p class='error-message'>Gagal menambahkan lowongan.</p>";
+        $errorMessage = 'Gagal menambahkan lowongan.';
     }
 }
 ?>
@@ -37,6 +46,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buat Lowongan Baru</title>
     <link rel="stylesheet" href="vacancy_create.css">
+    <style>
+        .notification {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 15px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease-in-out;
+        }
+        .notification.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .notification.success { background-color: #4CAF50; }
+        .notification.error { background-color: #f44336; }
+    </style>
+    <script>
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'notification ' + type;
+            notification.innerText = message;
+            document.body.appendChild(notification);
+            setTimeout(function () {
+                notification.classList.add('show');
+            }, 100);
+            setTimeout(function () {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            <?php if ($errorMessage): ?>
+                showNotification("<?= $errorMessage ?>", "error");
+            <?php endif; ?>
+        });
+    </script>
 </head>
 <body>
 <div class="container">

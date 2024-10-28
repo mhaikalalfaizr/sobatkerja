@@ -30,7 +30,7 @@ class Application {
         if ($result->num_rows > 0) {
             return $result->fetch_all(MYSQLI_ASSOC);
         } else {
-            return []; // Kembalikan array kosong jika tidak ada pelamar
+            return []; 
         }
     }
     

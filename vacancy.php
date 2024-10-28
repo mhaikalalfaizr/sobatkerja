@@ -15,27 +15,28 @@ class Vacancy {
         return $stmt->execute();
     }
 
-    public function getVacancies($umkm_id = null) {
-        $query = "
-            SELECT Vacancies.*, 
-                   (SELECT COUNT(*) FROM Applications WHERE Applications.vacancy_id = Vacancies.id) AS applicant_count 
-            FROM Vacancies 
-            " . ($umkm_id ? "WHERE Vacancies.umkm_id = ?" : "");
-    
-        $stmt = $this->db->prepare($query);
-        if ($umkm_id) {
-            $stmt->bind_param("i", $umkm_id);
-        }
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-
     public function getVacancyDetails($vacancy_id) {
         $query = "SELECT * FROM Vacancies WHERE id = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $vacancy_id);
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function updateVacancy($vacancy_id, $title, $description, $requirements, $job_type, $location) {
+        $query = "UPDATE Vacancies SET title = ?, description = ?, requirements = ?, job_type = ?, location = ? WHERE id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("sssssi", $title, $description, $requirements, $job_type, $location, $vacancy_id);
+        return $stmt->execute();
+    }
+
+    public function deleteVacancy($vacancy_id) {
+        $query = "DELETE FROM Vacancies WHERE id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $vacancy_id);
+        return $stmt->execute();
     }
 }
+
 ?>

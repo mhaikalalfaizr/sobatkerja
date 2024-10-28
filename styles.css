@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.dashboard-container, .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #e8e8e8;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.logo-text {
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #3EBBF7;
+}
+
+button, .button, .header-buttons .button {
+    background-color: #3EBBF7;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover, .button:hover, .header-buttons .button:hover {
+    background-color: #3498db;
+}
+
+.edit-button {
+    display: inline-block;
+    background-color: #3EBBF7;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: #3498db;
+}
+
+h2, h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.profile-section, .form-container {
+    margin-bottom: 30px;
+}
+
+.profile-section p, .form-group label {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #3EBBF7;
+    color: white;
+}
+
+td {
+    background-color: #fafafa;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container, .container {
+        padding: 10px;
+    }
+
+    button, .button {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+
+    table, th, td {
+        font-size: 12px;
+        padding: 8px;
+    }
+}

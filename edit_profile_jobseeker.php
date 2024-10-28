@@ -31,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Query untuk mendapatkan informasi profil
 $profileQuery = "SELECT full_name, job_field, skills, contact FROM JobSeeker WHERE jobseeker_id = ?";
 $profileStmt = $conn->prepare($profileQuery);
 $profileStmt->bind_param("i", $jobseeker_id);

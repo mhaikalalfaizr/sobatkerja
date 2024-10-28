@@ -12,7 +12,6 @@ $vacancy_id = $_GET['vacancy_id'] ?? 0;
 $application = new Application();
 $vacancy = new Vacancy();
 
-// Pastikan lowongan ini milik UMKM yang sedang login
 $umkm_id = $_SESSION['user_id'];
 $vacancyDetails = $vacancy->getVacancyDetails($vacancy_id);
 

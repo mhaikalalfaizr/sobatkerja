@@ -3,74 +3,162 @@ body, html {
     padding: 0;
     width: 100%;
     height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    color: #333;
 }
 
 .dashboard-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 1200px;
+    margin: auto;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 header {
-    width: 100%;
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #e8e8e8;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.logo {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+.header-logo {
     display: flex;
     align-items: center;
 }
 
 .logo-icon {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .logo-text {
-    margin-left: 8px;
-    height: 20px;
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #3EBBF7;
 }
 
-.add-vacancy-button .button {
+.header-buttons .button {
+    background-color: #3EBBF7;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.header-buttons .button:hover {
+    background-color: #3498db;
+}
+
+.profile-section {
+    margin-bottom: 30px;
+}
+
+.profile-section h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.profile-section p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.vacancies-section {
+    margin-bottom: 20px;
+}
+
+.vacancies-section h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.vacancies-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.vacancies-section th,
+.vacancies-section td {
+    padding: 12px;
+    text-align: left;
+}
+
+.vacancies-section th {
+    background-color: #3EBBF7;
+    color: white;
+    font-size: 16px;
+}
+
+.vacancies-section td {
+    background-color: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+/* Tombol Detail */
+.vacancies-section a {
+    color: #3EBBF7;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.vacancies-section a:hover {
+    color: #3498db;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 10px;
+    }
+
+    .header-buttons .button {
+        padding: 6px 15px;
+        font-size: 14px;
+    }
+
+    .vacancies-section th,
+    .vacancies-section td {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button, .button {
     background-color: #3EBBF7;
     color: white;
     padding: 10px 20px;
     text-decoration: none;
+    border: none;
     border-radius: 5px;
-    display: inline-block;
-    margin-top: 15px;
+    margin: 5px;
+    transition: background-color 0.3s;
 }
 
-.view-vacancies table {
-    width: 100%;
-    max-width: 900px;
-    margin-top: 20px;
-    border-collapse: collapse;
+button:hover, .button:hover {
+    background-color: #3498db;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #3EBBF7;
-    color: white;
-}
-
-td {
-    background-color: #fff;
-}
-
-.view-vacancies {
-    width: 100%;
-    max-width: 900px;
-}

@@ -34,19 +34,16 @@ class User {
     private function validateUniqueFields($userType, $email, $contact, $business_name = null, $full_name = null) {
         $errors = [];
 
-        // Periksa email unik
         $emailExists = $this->checkFieldExists('email', $email, $userType);
         if ($emailExists) {
             $errors['email'] = "Email sudah digunakan.";
         }
 
-        // Periksa nomor kontak unik
         $contactExists = $this->checkFieldExists('contact', $contact, $userType);
         if ($contactExists) {
             $errors['contact'] = "Nomor kontak sudah digunakan.";
         }
 
-        // Periksa nama usaha unik (khusus UMKM)
         if ($userType === 'UMKM' && $business_name) {
             $businessNameExists = $this->checkFieldExists('business_name', $business_name, $userType);
             if ($businessNameExists) {
@@ -54,7 +51,6 @@ class User {
             }
         }
 
-        // Periksa nama lengkap unik (khusus JobSeeker)
         if ($userType === 'JobSeeker' && $full_name) {
             $fullNameExists = $this->checkFieldExists('full_name', $full_name, $userType);
             if ($fullNameExists) {
@@ -73,5 +69,37 @@ class User {
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->num_rows > 0;
+    }
+
+    public function login($identifier, $password, $userType) {
+        $table = $userType === 'UMKM' ? 'UMKM' : 'JobSeeker';
+
+        if (filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
+            $query = "SELECT * FROM $table WHERE email = ?";
+        } else {
+            $query = "SELECT * FROM $table WHERE contact = ?";
+        }
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $identifier);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+
+        if ($result && password_verify($password, $result['password'])) {
+            $_SESSION['user_id'] = $result[$userType === 'UMKM' ? 'umkm_id' : 'jobseeker_id'];
+            $_SESSION['userType'] = $userType;
+            return true;
+        }
+        return false;
+    }
+
+    public function getProfile($userId, $userType) {
+        $table = $userType === 'UMKM' ? 'UMKM' : 'JobSeeker';
+        $query = "SELECT * FROM $table WHERE " . ($userType === 'UMKM' ? 'umkm_id' : 'jobseeker_id') . " = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 }
