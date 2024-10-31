@@ -72,8 +72,7 @@ $stmt->close();
             }, 100);
             setTimeout(function () {
                 notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 500); // Hapus elemen setelah menghilang
-            }, 3000);
+                setTimeout(() => notification.remove(), 500);
         }
     </script>
 </head>

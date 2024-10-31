@@ -1,28 +1,27 @@
 <?php
 class Database {
     private static $instance = null;
-    private $conn;
-
-    private $host = 'localhost';
-    private $user = 'root';
-    private $pass = '';
-    private $dbname = 'sbtkrj';
+    private $connection;
 
     private function __construct() {
-        $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->dbname);
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+        try {
+            $this->connection = new mysqli('127.0.0.1', 'root', '', 'sbtkrj');
+            if ($this->connection->connect_error) {
+                throw new Exception("Connection failed: " . $this->connection->connect_error);
+            }
+        } catch (Exception $e) {
+            die("Database connection error: " . $e->getMessage());
         }
     }
 
     public static function getInstance() {
-        if (!self::$instance) {
-            self::$instance = new Database();
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
         return self::$instance;
     }
 
     public function getConnection() {
-        return $this->conn;
+        return $this->connection;
     }
 }
