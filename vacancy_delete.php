@@ -59,7 +59,7 @@ $stmt->close();
             visibility: visible;
             opacity: 1;
         }
-        .notification.success { background-color: #f44336; } /* Warna merah untuk penghapusan */
+        .notification.success { background-color: #f44336; }
     </style>
     <script>
         function showNotification(message, type) {
