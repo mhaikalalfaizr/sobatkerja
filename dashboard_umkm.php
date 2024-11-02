@@ -84,7 +84,7 @@ $vacanciesResult = $stmt->get_result();
                                 <td><?= htmlspecialchars($vacancy['vacancy_title']) ?></td>
                                 <td><?= htmlspecialchars($vacancy['applicant_count'] ?? 0) ?></td>
                                 <td>
-                                    <a href="vacancy_details.php?vacancy_id=<?= $vacancy['vacancy_id'] ?>">Lihat Detail</a> |
+                                    <a href="vacancy_applicants.php?vacancy_id=<?= $vacancy['vacancy_id'] ?>">Lihat Pelamar</a> |
                                     <a href="vacancy_edit.php?vacancy_id=<?= $vacancy['vacancy_id'] ?>">Edit</a> |
                                     <a href="javascript:void(0);" onclick="confirmDelete(<?= $vacancy['vacancy_id'] ?>)">Hapus</a>
                                 </td>
@@ -93,7 +93,7 @@ $vacanciesResult = $stmt->get_result();
                     </tbody>
                 </table>
             <?php else: ?>
-                <p>Belum ada lowongan yang tersedia.</p>
+                <p>Belum ada lowongan yang dibuat, klik "Tambah Lowongan" untuk membuat lowongan kerja.</p>
             <?php endif; ?>
         </section>
     </div>

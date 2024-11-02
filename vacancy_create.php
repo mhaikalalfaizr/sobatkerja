@@ -119,7 +119,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="form-group">
             <label for="location">Lokasi</label>
-            <input type="text" id="location" name="location" required>
+            <select name="location">
+                <option value="">Semua Lokasi</option>
+                <option value="Aceh">Aceh</option>
+                <option value="Medan">Medan</option>
+                <option value="Padang">Padang</option>
+                <option value="Pekanbaru">Pekanbaru</option>
+                <option value="Jambi">Jambi</option>
+                <option value="Palembang">Palembang</option>
+                <option value="Bengkulu">Bengkulu</option>
+                <option value="Lampung">Lampung</option>
+                <option value="Pangkal Pinang">Pangkal Pinang</option>
+                <option value="Tanjung Pinang">Tanjung Pinang</option>
+                <option value="Jakarta">Jakarta</option>
+                <option value="Bandung">Bandung</option>
+                <option value="Semarang">Semarang</option>
+                <option value="Yogyakarta">Yogyakarta</option>
+                <option value="Surabaya">Surabaya</option>
+                <option value="Malang">Malang</option>
+                <option value="Denpasar">Denpasar</option>
+                <option value="Mataram">Mataram</option>
+                <option value="Kupang">Kupang</option>
+                <option value="Pontianak">Pontianak</option>
+                <option value="Banjarmasin">Banjarmasin</option>
+                <option value="Samarinda">Samarinda</option>
+                <option value="Balikpapan">Balikpapan</option>
+                <option value="Makassar">Makassar</option>
+                <option value="Manado">Manado</option>
+                <option value="Palu">Palu</option>
+                <option value="Kendari">Kendari</option>
+                <option value="Gorontalo">Gorontalo</option>
+                <option value="Ambon">Ambon</option>
+                <option value="Ternate">Ternate</option>
+                <option value="Jayapura">Jayapura</option>
+                <option value="Sorong">Sorong</option>
+            </select>
+
         </div>
         <div class="form-group">
             <label for="category">Kategori Usaha</label>
@@ -129,4 +164,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </div>
 </body>
-</html>
+</html> 

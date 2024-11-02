@@ -10,26 +10,26 @@ class User {
 
     public function register($userType, $email, $password, $contact, $additionalData) {
         $errors = $this->validateUniqueFields($userType, $email, $contact, $additionalData['business_name'] ?? null, $additionalData['full_name'] ?? null);
-
+    
         if (!empty($errors)) {
             return $errors;
         }
-
+    
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
+    
         if ($userType === 'UMKM') {
             $query = "INSERT INTO UMKM (email, password, contact, business_name, business_type, address) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
             $stmt->bind_param("ssssss", $email, $hashedPassword, $contact, $additionalData['business_name'], $additionalData['business_type'], $additionalData['address']);
         } else {
-            $query = "INSERT INTO JobSeeker (email, password, contact, full_name, job_field, skills) VALUES (?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO JobSeeker (email, password, contact, full_name) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
-            $stmt->bind_param("ssssss", $email, $hashedPassword, $contact, $additionalData['full_name'], $additionalData['job_field'], $additionalData['skills']);
+            $stmt->bind_param("ssss", $email, $hashedPassword, $contact, $additionalData['full_name']);
         }
-
+    
         $stmt->execute();
         return [];
-    }
+    }    
 
     private function validateUniqueFields($userType, $email, $contact, $business_name = null, $full_name = null) {
         $errors = [];

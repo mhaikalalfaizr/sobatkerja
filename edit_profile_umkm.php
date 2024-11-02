@@ -1,12 +1,13 @@
 <?php
 session_start();
 
+require_once 'database.php';
+$conn = Database::getInstance()->getConnection();
+
 if (!isset($_SESSION['userType']) || $_SESSION['userType'] !== 'UMKM') {
     header('Location: login.php');
     exit();
 }
-
-require 'config.php';
 
 $umkm_id = $_SESSION['user_id'];
 

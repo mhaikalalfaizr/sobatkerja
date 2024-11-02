@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         echo "<script>document.addEventListener('DOMContentLoaded', function() {
             showNotification('Perubahan berhasil disimpan!', 'success');
-            setTimeout(function() { window.location.href = 'vacancy_details.php?vacancy_id={$vacancy_id}'; }, 2000);
+            setTimeout(function() { window.location.href = 'dashboard_umkm.php?vacancy_id={$vacancy_id}'; }, 2000);
         });</script>";
     } else {
         echo "<p class='error-message'>Gagal menyimpan perubahan. Silakan coba lagi.</p>";

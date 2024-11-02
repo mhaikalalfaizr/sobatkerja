@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($userType == "JobSeeker") {
         $additionalData = [
             'full_name' => $_POST["fullName"],
-            'job_field' => $_POST["jobField"],
-            'skills' => $_POST["skills"]
+ #           'job_field' => $_POST["jobField"],
+ #           'skills' => $_POST["skills"]
         ];
     }
 
@@ -100,13 +100,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         function showFields() {
             const userType = document.getElementById("userType").value;
             const umkmFields = document.getElementById("umkmFields");
-            const jobSeekerFields = document.getElementById("jobSeekerFields");
+    /*      const jobSeekerFields = document.getElementById("jobSeekerFields"); */
 
             umkmFields.style.display = userType === "UMKM" ? "block" : "none";
-            jobSeekerFields.style.display = userType === "JobSeeker" ? "block" : "none";
+    /*     jobSeekerFields.style.display = userType === "JobSeeker" ? "block" : "none"; */
         }
 
-        function updateSkills() {
+/*        function updateSkills() {
             const jobField = document.getElementById("jobField").value;
             const skills = document.getElementById("skills");
 
@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 option.textContent = skill;
                 skills.appendChild(option);
             });
-        }
+        } */
 
         function validateContactInput(event) {
             const contactInput = event.target;
@@ -144,9 +144,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 showNotification('Nomor kontak hanya boleh berisi angka.', 'error');
             }
         }
+
     </script>
+
 </head>
 <body>
+
     <div class="container">
         <div class="logo">
             <img src="assets/icon.svg" alt="Logo" id="icon-logo">
@@ -187,9 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div id="jobSeekerFields" style="display: none;">
-                <label for="fullName">Nama Lengkap:</label>
-                <input type="text" id="fullName" name="fullName" placeholder="Nama lengkap Anda">
-
+                
                 <label for="jobField">Bidang Pekerjaan:</label>
                 <select id="jobField" name="jobField" onchange="updateSkills()">
                     <option value="">--Pilih Bidang Pekerjaan--</option>
@@ -210,6 +211,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="">--Pilih Skill--</option>
                 </select>
             </div>
+
+            <label for="fullName">Nama Lengkap:</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Nama lengkap Anda">
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" placeholder="contoh@email.com" required>

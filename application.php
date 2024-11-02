@@ -15,23 +15,18 @@ class Application {
         return $stmt->execute();
     }
 
-    public function getApplicants($jobseeker_id) {
+    public function getApplicants($vacancy_id) {
         $query = "
-            SELECT 
-                JobSeeker.full_name, Applications.application_date, Applications.cv_path 
+            SELECT JobSeeker.full_name, Applications.application_date, Applications.cv_path 
             FROM Applications
-            JOIN JobSeeker ON Applications.jobseeker_id = JobSeeker.jobseeker_id
-            WHERE Applications.vacancy_id = ?";
+            INNER JOIN JobSeeker ON Applications.jobseeker_id = JobSeeker.jobseeker_id
+            WHERE Applications.vacancy_id = ?
+        ";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $vacancy_id);
         $stmt->execute();
         $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            return []; 
-        }
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
 }

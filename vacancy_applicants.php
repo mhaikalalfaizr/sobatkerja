@@ -21,6 +21,14 @@ if (!$vacancyDetails || $vacancyDetails['umkm_id'] !== $umkm_id) {
 }
 
 $applicants = $application->getApplicants($vacancy_id);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $applicationId = $_POST['application_id'];
+    $status = $_POST['status'];
+    $application->updateApplicationStatus($applicationId, $status);
+    header("Location: vacancy_applicants.php?vacancy_id=$vacancy_id");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,11 +57,7 @@ $applicants = $application->getApplicants($vacancy_id);
                             <td><?php echo htmlspecialchars($applicant['full_name']); ?></td>
                             <td><?php echo htmlspecialchars($applicant['application_date']); ?></td>
                             <td>
-                                <?php if (!empty($applicant['full_name'])): ?>
-                                    <td><?php echo htmlspecialchars($applicant['full_name']); ?></td>
-                                <?php else: ?>
-                                    <td>Nama Tidak Tersedia</td>
-                                <?php endif; ?>
+                            <a href="<?php echo htmlspecialchars($applicant['cv_path']); ?>" target="_blank" class="download-button">Unduh CV</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

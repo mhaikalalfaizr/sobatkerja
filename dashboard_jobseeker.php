@@ -64,8 +64,6 @@ $applicationsResult = $stmt->get_result();
         <section class="profile-section">
             <h3>Profil Anda</h3>
             <p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($profile['full_name']) ?></p>
-            <p><strong>Bidang Pekerjaan:</strong> <?= htmlspecialchars($profile['job_field']) ?></p>
-            <p><strong>Skill:</strong> <?= htmlspecialchars($profile['skills']) ?></p>
             <p><strong>Email:</strong> <?= htmlspecialchars($profile['email']) ?></p>
             <p><strong>Kontak:</strong> <?= htmlspecialchars($profile['contact']) ?></p>
         </section>

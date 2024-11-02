@@ -5,7 +5,7 @@ class Database {
 
     private function __construct() {
         try {
-            $this->connection = new mysqli('127.0.0.1', 'root', '', 'sbtkrj');
+            $this->connection = new mysqli('localhost', 'root', '', 'sbtkrj');
             if ($this->connection->connect_error) {
                 throw new Exception("Connection failed: " . $this->connection->connect_error);
             }

@@ -7,16 +7,11 @@ if (!isset($_SESSION['userType']) || $_SESSION['userType'] !== 'JobSeeker') {
 }
 
 require_once 'Vacancy.php';
-require_once 'User.php';
 
 $vacancy_id = $_GET['vacancy_id'] ?? null;
 
-$query = "SELECT * FROM Vacancies WHERE id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $vacancy_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$vacancy = $result->fetch_assoc();
+$vacancyObj = new Vacancy();
+$vacancy = $vacancyObj->getVacancyDetails($vacancy_id);
 
 if (!$vacancy) {
     echo "Lowongan tidak ditemukan.";
@@ -32,17 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($file_type != "pdf") {
         echo "<p class='error-message'>CV harus dalam format PDF.</p>";
     } elseif (move_uploaded_file($_FILES['cv']['tmp_name'], $cv_file)) {
+        $applicationResult = $vacancyObj->createApplication($jobseeker_id, $vacancy_id, $cv_file);
 
-        $query = "INSERT INTO Applications (jobseeker_id, vacancy_id, application_date, cv_path) VALUES (?, ?, NOW(), ?)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("iis", $jobseeker_id, $vacancy_id, $cv_file);
-
-        if ($stmt->execute()) {
+        if ($applicationResult) {
             echo "<p class='success-message'>Lamaran berhasil dikirim!</p>";
         } else {
-            echo "<p class='error-message'>Error: " . $stmt->error . "</p>";
+            echo "<p class='error-message'>Gagal mengirim lamaran. Silakan coba lagi.</p>";
         }
-        $stmt->close();
     } else {
         echo "<p class='error-message'>Gagal mengunggah CV. Silakan coba lagi.</p>";
     }
