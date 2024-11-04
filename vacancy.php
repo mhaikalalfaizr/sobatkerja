@@ -16,7 +16,12 @@ class Vacancy {
     }
 
     public function getVacancyDetails($vacancy_id) {
-        $query = "SELECT * FROM Vacancies WHERE id = ?";
+        $query = "
+            SELECT v.*, u.business_name 
+            FROM vacancies v
+            JOIN UMKM u ON v.umkm_id = u.umkm_id
+            WHERE v.id = ?
+        ";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $vacancy_id);
         $stmt->execute();

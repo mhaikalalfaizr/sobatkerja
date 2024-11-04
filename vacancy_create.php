@@ -25,7 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $job_type = $_POST['job_type'];
     $location = $_POST['location'];
 
-    if ($vacancy->createVacancy($umkm_id, $title, $description, $requirements, $job_type, $location, $category)) {
+    if (empty($title) || empty($job_type) || empty($description) || empty($requirements) || empty($location)) {
+        $errorMessage = "Semua kolom harus diisi.";
+    } elseif ($vacancy->createVacancy($umkm_id, $title, $description, $requirements, $job_type, $location, $category)) {
         $successMessage = 'Lowongan berhasil ditambahkan! Mengalihkan kembali ke dashboard...';
         echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -40,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,35 +94,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
         });
     </script>
+    
 </head>
 <body>
 <div class="container">
     <h2>Buat Lowongan Baru</h2>
-    <form action="vacancy_create.php" method="POST" class="form-container">
+    <form action="vacancy_create.php" method="POST" class="form-container" onsubmit="return validateForm()">
         <div class="form-group">
             <label for="title">Judul Lowongan</label>
-            <input type="text" id="title" name="title" required>
+            <input type="text" id="title" name="title" placeholder="Misal : Waiter Gerai ABCD" required>
         </div>
         <div class="form-group">
             <label for="job_type">Jenis Pekerjaan</label>
             <select id="job_type" name="job_type" required>
+                <option value="">--Pilih Jenis Pekerjaan--</option>
                 <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
-                <option value="Freelance">Freelance</option>
+                <option value="Freelance">Freelance (Remote)</option>
             </select>
         </div>
         <div class="form-group">
             <label for="description">Deskripsi Pekerjaan</label>
-            <textarea id="description" name="description" required></textarea>
+            <textarea id="description" name="description" placeholder="Deskripsikan dengan detail, seperti lokasi, gaji, dll." required></textarea>
         </div>
         <div class="form-group"> 
             <label for="requirements">Persyaratan Pekerjaan</label>
-            <textarea id="requirements" name="requirements" required></textarea>
+            <textarea id="requirements" name="requirements" placeholder="Jelaskan dengan detail, seperti umur, jenis kelamin, riwayat, dll." required></textarea>
         </div>
         <div class="form-group">
             <label for="location">Lokasi</label>
-            <select name="location">
-                <option value="">Semua Lokasi</option>
+            <select id="location" name="location" required>
+                <option value="">--Pilih Lokasi--</option>
                 <option value="Aceh">Aceh</option>
                 <option value="Medan">Medan</option>
                 <option value="Padang">Padang</option>
@@ -154,7 +158,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="Jayapura">Jayapura</option>
                 <option value="Sorong">Sorong</option>
             </select>
-
         </div>
         <div class="form-group">
             <label for="category">Kategori Usaha</label>
@@ -164,4 +167,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </div>
 </body>
-</html> 
+</html>

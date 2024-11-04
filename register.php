@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($userType == "UMKM") {
         $additionalData = array_merge($additionalData, [
-            'full_name' => $_POST["fullName"],
-            'business_name' => $_POST["businessName"],
-            'business_type' => $_POST["businessType"],
-            'address' => $_POST["address"]
+            'full_name' => $_POST["fullName"] ?? '', 
+            'business_name' => $_POST["businessName"] ?? '',
+            'business_type' => $_POST["businessType"] ?? '',
+            'address' => $_POST["address"] ?? ''
         ]);
     } elseif ($userType == "JobSeeker") {
-        $additionalData['full_name'] = $_POST["fullName"];
+        $additionalData['full_name'] = $_POST["fullName"] ?? '';
     }
 
     if (!preg_match('/^[0-9]+$/', $contact)) {
@@ -192,6 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <label for="fullName">Nama Lengkap:</label>
                 <input type="text" id="fullName" name="fullName" placeholder="Nama lengkap Anda" required>
+
 
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="contoh@email.com" required>

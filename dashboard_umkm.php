@@ -18,6 +18,7 @@ $queryVacancies = "
     SELECT 
         Vacancies.id AS vacancy_id,
         Vacancies.title AS vacancy_title,
+        Vacancies.created_at AS created_at,
         COUNT(Applications.id) AS applicant_count
     FROM Vacancies
     LEFT JOIN Applications ON Vacancies.id = Applications.vacancy_id
@@ -60,13 +61,14 @@ $vacanciesResult = $stmt->get_result();
 
         <section class="profile-section">
             <h3>Profil Usaha Anda</h3>
-            <p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($profile['full_name']) ?></p>
-            <p><strong>Nama Usaha:</strong> <?= htmlspecialchars($profile['business_name']) ?></p>
-            <p><strong>Jenis Usaha:</strong> <?= htmlspecialchars($profile['business_type']) ?></p>
-            <p><strong>Alamat:</strong> <?= htmlspecialchars($profile['address']) ?></p>
-            <p><strong>Email:</strong> <?= htmlspecialchars($profile['email']) ?></p>
-            <p><strong>Kontak:</strong> <?= htmlspecialchars($profile['contact']) ?></p>
+            <p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($profile['full_name'] ?? '') ?></p>
+            <p><strong>Nama Usaha:</strong> <?= htmlspecialchars($profile['business_name'] ?? '') ?></p>
+            <p><strong>Jenis Usaha:</strong> <?= htmlspecialchars($profile['business_type'] ?? '') ?></p>
+            <p><strong>Alamat:</strong> <?= htmlspecialchars($profile['address'] ?? '') ?></p>
+            <p><strong>Email:</strong> <?= htmlspecialchars($profile['email'] ?? '') ?></p>
+            <p><strong>Kontak:</strong> <?= htmlspecialchars($profile['contact'] ?? '') ?></p>
         </section>
+
 
         <section class="vacancies-section">
             <h3>Daftar Lowongan</h3>
@@ -76,6 +78,7 @@ $vacanciesResult = $stmt->get_result();
                         <tr>
                             <th>Judul Lowongan</th>
                             <th>Jumlah Pelamar</th>
+                            <th>Tanggal Dibuat</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -84,6 +87,7 @@ $vacanciesResult = $stmt->get_result();
                             <tr>
                                 <td><?= htmlspecialchars($vacancy['vacancy_title']) ?></td>
                                 <td><?= htmlspecialchars($vacancy['applicant_count'] ?? 0) ?></td>
+                                <td><?= htmlspecialchars(date("d-m-Y", strtotime($vacancy['created_at']))) ?></td>
                                 <td>
                                     <a href="vacancy_applicants.php?vacancy_id=<?= $vacancy['vacancy_id'] ?>">Lihat Pelamar</a> |
                                     <a href="vacancy_edit.php?vacancy_id=<?= $vacancy['vacancy_id'] ?>">Edit</a> |

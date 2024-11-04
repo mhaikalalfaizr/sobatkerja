@@ -71,6 +71,7 @@ $applicationsResult = $stmt->get_result();
         <section class="applications-section">
             <h3>Riwayat Aplikasi Lamaran</h3>
             <?php if ($applicationsResult->num_rows > 0): ?>
+                <p>Anda akan dihubungi oleh pihak UMKM terkait lamaran anda secepatnya, harap menunggu ya :) </p>
                 <table>
                     <thead>
                         <tr>

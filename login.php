@@ -3,6 +3,8 @@ session_start();
 require_once 'User.php';
 
 $user = new User();
+$successMessage = '';
+$errorMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $identifier = $_POST["identifier"]; 
@@ -11,22 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user->login($identifier, $password, $userType)) {
         $_SESSION['user_email'] = $identifier;
+        $_SESSION['userType'] = $userType;
         $dashboardUrl = $userType == "UMKM" ? 'dashboard_umkm.php' : 'dashboard_jobseeker.php';
-    
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', function() {
-                showNotification('Login berhasil! Mengalihkan anda ke dashboard...', 'success');
-                setTimeout(function() {
-                    window.location.href = '$dashboardUrl';
-                }, 2000);
-            });
-        </script>";
+        $successMessage = "Login berhasil! Mengalihkan anda ke dashboard...";
+        
+        header("Location: $dashboardUrl");
+        exit(); // Menghentikan eksekusi agar menghindari resubmission
     } else {
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', function() {
-                showNotification('Email atau password atau jenis pengguna salah.', 'error');
-            });
-        </script>";
+        $errorMessage = "Email atau password atau jenis pengguna salah.";
     }    
 }
 ?>
@@ -53,6 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 setTimeout(() => notification.remove(), 500);
             }, 3000);
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            <?php if ($successMessage): ?>
+                showNotification("<?= $successMessage ?>", "success");
+            <?php elseif ($errorMessage): ?>
+                showNotification("<?= $errorMessage ?>", "error");
+            <?php endif; ?>
+        });
     </script>
 </head>
 <body>

@@ -18,9 +18,10 @@ class User {
         $hashedAnswer = password_hash($additionalData['security_answer'], PASSWORD_DEFAULT);
 
         if ($userType === 'UMKM') {
-            $query = "INSERT INTO UMKM (email, password, contact, business_name, business_type, address, security_question, security_answer) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $full_name = $additionalData['full_name'];
+            $query = "INSERT INTO UMKM (email, password, contact, full_name, business_name, business_type, address, security_question, security_answer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
-            $stmt->bind_param("ssssssss", $email, $hashedPassword, $contact, $additionalData['business_name'], $additionalData['business_type'], $additionalData['address'], $additionalData['security_question'], $hashedAnswer);
+            $stmt->bind_param("sssssssss", $email, $hashedPassword, $contact, $full_name, $additionalData['business_name'], $additionalData['business_type'], $additionalData['address'], $additionalData['security_question'], $hashedAnswer);
         } else {
             $query = "INSERT INTO JobSeeker (email, password, contact, full_name, security_question, security_answer) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
