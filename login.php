@@ -10,8 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userType = $_POST["userType"]; 
 
     if ($user->login($identifier, $password, $userType)) {
+        $_SESSION['user_email'] = $identifier;
         $dashboardUrl = $userType == "UMKM" ? 'dashboard_umkm.php' : 'dashboard_jobseeker.php';
-
+    
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 showNotification('Login berhasil! Mengalihkan anda ke dashboard...', 'success');
@@ -26,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 showNotification('Email atau password atau jenis pengguna salah.', 'error');
             });
         </script>";
-    }
+    }    
 }
 ?>
 
@@ -38,8 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>SobatKerja - Login</title>
     <link rel="stylesheet" href="daftar.css">
     <link rel="stylesheet" href="notification.css">
-    <style>
-    </style>
     <script>
         function showNotification(message, type) {
             const notification = document.createElement('div');
@@ -78,6 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit">Login</button>
         </form>
+
+        <p>Lupa password? <a href="password_forgot.php">Reset di sini</a></p>
 
         <p>Belum memiliki akun? <a href="register.php">Daftar di sini</a></p>
     </div>

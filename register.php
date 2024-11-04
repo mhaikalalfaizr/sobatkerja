@@ -11,19 +11,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $contact = $_POST["contact"];
 
-    $additionalData = [];
+    $additionalData = [
+        'security_question' => $_POST["security_question"],
+        'security_answer' => $_POST["security_answer"]
+    ];
 
     if ($userType == "UMKM") {
-        $additionalData = [
+        $additionalData = array_merge($additionalData, [
             'full_name' => $_POST["fullName"],
             'business_name' => $_POST["businessName"],
             'business_type' => $_POST["businessType"],
             'address' => $_POST["address"]
-        ];
+        ]);
     } elseif ($userType == "JobSeeker") {
-        $additionalData = [
-            'full_name' => $_POST["fullName"]
-        ];
+        $additionalData['full_name'] = $_POST["fullName"];
     }
 
     if (!preg_match('/^[0-9]+$/', $contact)) {
@@ -200,6 +201,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <label for="contact">Nomor Kontak:</label>
                 <input type="text" id="contact" name="contact" placeholder="62812xxxxxx" required oninput="validateContactInput(event)">
+
+                <label for="security_question">Pertanyaan Keamanan:</label>
+                <select id="security_question" name="security_question" required>
+                    <option value="">--Pilih Pertanyaan--</option>
+                    <option value="Nama hewan peliharaan pertama Anda?">Nama hewan peliharaan pertama Anda?</option>
+                    <option value="Nama sekolah pertama Anda?">Nama sekolah pertama Anda?</option>
+                    <option value="Nama kota tempat Anda dilahirkan?">Nama kota tempat Anda dilahirkan?</option>
+                </select>
+
+                <label for="security_answer">Jawaban Keamanan:</label>
+                <input type="text" id="security_answer" name="security_answer" required>
 
                 <button type="submit">Daftar</button>
             </form>

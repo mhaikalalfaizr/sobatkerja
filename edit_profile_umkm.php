@@ -8,6 +8,13 @@ if (!isset($_SESSION['userType']) || $_SESSION['userType'] !== 'UMKM') {
     exit();
 }
 
+if (!isset($_SESSION['user_email'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$_SESSION['reset_email'] = $_SESSION['user_email'];
+
 $umkm_id = $_SESSION['user_id'];
 $successMessage = '';
 $errorMessage = '';
@@ -33,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             full_name = ?, business_name = ?, business_type = ?, address = ?, contact = ?, email = ?
             WHERE umkm_id = ?";
         $stmt = $conn->prepare($updateQuery);
-        
         $stmt->bind_param("ssssssi", $full_name, $business_name, $business_type, $address, $contact, $email, $umkm_id);
 
         if ($stmt->execute()) {
@@ -41,9 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
                     showNotification('$successMessage', 'success');
-                    setTimeout(function() {
-                        window.location.href = 'dashboard_umkm.php';
-                    }, 2000);
                 });
             </script>";
         } else {
@@ -54,8 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $profile = $user->getProfile($umkm_id, 'UMKM');
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,43 +100,51 @@ $profile = $user->getProfile($umkm_id, 'UMKM');
     </script>
 </head>
 <body>
-    <div class="edit-profile-container">
-        <h2>Edit Profil UMKM</h2>
-        <form action="edit_profile_umkm.php" method="post">
-
-            <label for="full_name">Nama Pemilik Usaha:</label>
-            <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($profile['full_name']); ?>" required>
-
-            <label for="business_name">Nama Usaha:</label>
-            <input type="text" id="business_name" name="business_name" value="<?php echo htmlspecialchars($profile['business_name']); ?>" required>
-
-            <label for="business_type">Jenis Usaha:</label>
-            <select id="business_type" name="business_type" required>
-                <option value="">--Pilih Jenis Usaha--</option>
-                <option value="Retail" <?php if ($profile['business_type'] == 'Retail') echo 'selected'; ?>>Retail</option>
-                <option value="Kuliner" <?php if ($profile['business_type'] == 'Kuliner') echo 'selected'; ?>>Kuliner</option>
-                <option value="Jasa" <?php if ($profile['business_type'] == 'Jasa') echo 'selected'; ?>>Jasa</option>
-                <option value="Teknologi" <?php if ($profile['business_type'] == 'Teknologi') echo 'selected'; ?>>Teknologi</option>
-                <option value="Kerajinan" <?php if ($profile['business_type'] == 'Kerajinan') echo 'selected'; ?>>Kerajinan</option>
-                <option value="Pertanian" <?php if ($profile['business_type'] == 'Pertanian') echo 'selected'; ?>>Pertanian</option>
-                <option value="Peternakan" <?php if ($profile['business_type'] == 'Peternakan') echo 'selected'; ?>>Peternakan</option>
-                <option value="Fashion" <?php if ($profile['business_type'] == 'Fashion') echo 'selected'; ?>>Fashion</option>
-                <option value="Kesehatan" <?php if ($profile['business_type'] == 'Kesehatan') echo 'selected'; ?>>Kesehatan</option>
-                <option value="Pendidikan" <?php if ($profile['business_type'] == 'Pendidikan') echo 'selected'; ?>>Pendidikan</option>
-                <option value="Keuangan" <?php if ($profile['business_type'] == 'Keuangan') echo 'selected'; ?>>Keuangan</option>
-            </select>
-
-            <label for="address">Alamat:</label>
-            <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($profile['address']); ?>" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($profile['email']); ?>" required>
-            
-            <label for="contact">Kontak:</label>
-            <input type="text" id="contact" name="contact" value="<?php echo htmlspecialchars($profile['contact']); ?>" required oninput="validateContactInput(event)">
-
-            <button type="submit">Simpan Perubahan</button>
-        </form>
+<div class="edit-profile-container">
+    <div class="logo">
+        <img src="assets/icon.svg" alt="Logo" id="icon-logo">
+        <img src="assets/logotext.svg" alt="Text Logo" id="text-logo">
     </div>
+    <h2>Edit Profil UMKM</h2>
+    <form action="edit_profile_umkm.php" method="post">
+        <label for="full_name">Nama Lengkap:</label>
+        <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($profile['full_name']); ?>" required>
+
+        <label for="business_name">Nama Usaha:</label>
+        <input type="text" id="business_name" name="business_name" value="<?php echo htmlspecialchars($profile['business_name']); ?>" required>
+
+        <label for="business_type">Jenis Usaha:</label>
+        <select id="business_type" name="business_type" required>
+            <option value="">--Pilih Jenis Usaha--</option>
+            <option value="Retail" <?php if ($profile['business_type'] == 'Retail') echo 'selected'; ?>>Retail</option>
+            <option value="Kuliner" <?php if ($profile['business_type'] == 'Kuliner') echo 'selected'; ?>>Kuliner</option>
+            <option value="Jasa" <?php if ($profile['business_type'] == 'Jasa') echo 'selected'; ?>>Jasa</option>
+            <option value="Teknologi" <?php if ($profile['business_type'] == 'Teknologi') echo 'selected'; ?>>Teknologi</option>
+            <option value="Kerajinan" <?php if ($profile['business_type'] == 'Kerajinan') echo 'selected'; ?>>Kerajinan</option>
+            <option value="Pertanian" <?php if ($profile['business_type'] == 'Pertanian') echo 'selected'; ?>>Pertanian</option>
+            <option value="Peternakan" <?php if ($profile['business_type'] == 'Peternakan') echo 'selected'; ?>>Peternakan</option>
+            <option value="Fashion" <?php if ($profile['business_type'] == 'Fashion') echo 'selected'; ?>>Fashion</option>
+            <option value="Kesehatan" <?php if ($profile['business_type'] == 'Kesehatan') echo 'selected'; ?>>Kesehatan</option>
+            <option value="Pendidikan" <?php if ($profile['business_type'] == 'Pendidikan') echo 'selected'; ?>>Pendidikan</option>
+            <option value="Keuangan" <?php if ($profile['business_type'] == 'Keuangan') echo 'selected'; ?>>Keuangan</option>
+        </select>
+
+        <label for="address">Alamat:</label>
+        <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($profile['address']); ?>" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($profile['email']); ?>" required>
+
+        <label for="contact">Kontak:</label>
+        <input type="text" id="contact" name="contact" value="<?php echo htmlspecialchars($profile['contact']); ?>" required oninput="validateContactInput(event)">
+
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+
+    <p class="change-password-link">
+        <br>
+        Ingin mengubah password? <a href="password_reset.php">Klik di sini</a>
+    </p>
+</div>
 </body>
 </html>
