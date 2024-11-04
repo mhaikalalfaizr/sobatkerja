@@ -60,6 +60,7 @@ $vacanciesResult = $stmt->get_result();
 
         <section class="profile-section">
             <h3>Profil Usaha Anda</h3>
+            <p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($profile['full_name']) ?></p>
             <p><strong>Nama Usaha:</strong> <?= htmlspecialchars($profile['business_name']) ?></p>
             <p><strong>Jenis Usaha:</strong> <?= htmlspecialchars($profile['business_type']) ?></p>
             <p><strong>Alamat:</strong> <?= htmlspecialchars($profile['address']) ?></p>

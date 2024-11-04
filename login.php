@@ -37,30 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SobatKerja - Login</title>
     <link rel="stylesheet" href="daftar.css">
+    <link rel="stylesheet" href="notification.css">
     <style>
-        .notification {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 4px;
-            padding: 15px;
-            position: fixed;
-            z-index: 1;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 16px;
-            opacity: 0;
-            transition: visibility 0s, opacity 0.5s ease-in-out;
-        }
-        .notification.show {
-            visibility: visible;
-            opacity: 1;
-        }
-        .notification.success { background-color: #4CAF50; }
-        .notification.error { background-color: #f44336; }
     </style>
     <script>
         function showNotification(message, type) {
