@@ -20,10 +20,12 @@ $stmt = $db->prepare($deleteQuery);
 $stmt->bind_param("i", $vacancy_id);
 
 if ($stmt->execute()) {
-    echo "<script>document.addEventListener('DOMContentLoaded', function() {
-        showNotification('Lowongan berhasil dihapus!', 'success');
-        setTimeout(function() { window.location.href = 'dashboard_umkm.php'; }, 2000);
-    });</script>";
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('Lowongan berhasil dihapus!', 'success');
+            setTimeout(function() { window.location.href = 'dashboard_umkm.php'; }, 2000);
+        });
+    </script>";
 } else {
     echo "<p class='error-message'>Gagal menghapus lowongan. Silakan coba lagi.</p>";
 }
@@ -59,23 +61,33 @@ $stmt->close();
             visibility: visible;
             opacity: 1;
         }
-        .notification.success { background-color: #f44336; }
-    </style>
-    <script>
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = 'notification ' + type;
-            notification.innerText = message;
-            document.body.appendChild(notification);
-            setTimeout(function () {
-                notification.classList.add('show');
-            }, 100);
-            setTimeout(function () {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 500);
+        .notification.success { background-color: #4CAF50; }
+        .error-message {
+            color: #f44336;
+            text-align: center;
+            margin-top: 20px;
         }
-    </script>
+    </style>
 </head>
 <body>
+
+<script>
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = 'notification ' + type;
+        notification.innerText = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(function () {
+            notification.classList.add('show');
+        }, 100);
+
+        setTimeout(function () {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 500);
+        }, 2000);
+    }
+</script>
+
 </body>
 </html>
